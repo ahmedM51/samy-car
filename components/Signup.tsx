@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../services/supabase';
+import { ADMIN_EMAIL } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { UserPlus, AlertCircle, CheckCircle } from 'lucide-react';
 import { Button } from './ui/Button';
@@ -16,6 +17,12 @@ const Signup = () => {
     setLoading(true);
     setErrorMsg('');
     setSuccessMsg('');
+
+    if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      setErrorMsg('غير مسموح بإنشاء حسابات أخرى. هذا النظام مخصص لحساب أدمن واحد فقط.');
+      setLoading(false);
+      return;
+    }
 
     const { error } = await supabase.auth.signUp({
       email,

@@ -7,6 +7,7 @@ import InstallmentContracts from './components/InstallmentContracts';
 import TitleTransferContracts from './components/TitleTransferContracts';
 import Showroom from './components/Showroom';
 import Reports from './components/Reports';
+import CompanySettings from './components/CompanySettings';
 import Login from './components/Login';
 import Signup from './components/Signup';
 
@@ -54,6 +55,7 @@ const App = () => {
               <Route path="/title-transfer" element={<TitleTransferContracts />} />
               <Route path="/showroom" element={<Showroom />} />
               <Route path="/reports" element={<Reports />} />
+              <Route path="/settings" element={<CompanySettings />} />
             </Route>
           </Route>
         </Routes>

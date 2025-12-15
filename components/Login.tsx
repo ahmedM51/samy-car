@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { supabase } from '../services/supabase';
+import { ADMIN_EMAIL } from '../context/AuthContext';
 import { Link, useNavigate } from 'react-router-dom';
 import { LogIn, AlertCircle } from 'lucide-react';
 import { Button } from './ui/Button';
@@ -15,6 +16,12 @@ const Login = () => {
     e.preventDefault();
     setLoading(true);
     setErrorMsg('');
+
+    if (email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+      setErrorMsg('هذا النظام مخصص لحساب الأدمن فقط. استخدم البريد الإلكتروني المعتمد لإدارة النظام.');
+      setLoading(false);
+      return;
+    }
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
