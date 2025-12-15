@@ -12,7 +12,7 @@ import Signup from './components/Signup';
 
 // مكون لحماية المسارات الخاصة
 const PrivateRoute = () => {
-  const { user, loading } = useAuth();
+  const { user, loading, isAdmin } = useAuth();
 
   if (loading) {
     return (
@@ -22,16 +22,17 @@ const PrivateRoute = () => {
     );
   }
 
-  return user ? <Outlet /> : <Navigate to="/login" />;
+  return user && isAdmin ? <Outlet /> : <Navigate to="/login" />;
 };
 
-// مكون لمنع الوصول لصفحات الدخول إذا كان المستخدم مسجلاً بالفعل
+// مكون لمنع الوصول لصفحات الدخول إذا كان المستخدم مسجلاً بالفعل كأدمن
 const PublicRoute = () => {
-    const { user, loading } = useAuth();
-  
-    if (loading) return null;
-  
-    return !user ? <Outlet /> : <Navigate to="/" />;
+  const { user, loading, isAdmin } = useAuth();
+
+  if (loading) return null;
+
+  // لو الأدمن داخل بالفعل يرجع للصفحة الرئيسية، غير كده يسمح بعرض صفحة الدخول / التسجيل
+  return !user || !isAdmin ? <Outlet /> : <Navigate to="/" />;
 };
 
 const App = () => {
